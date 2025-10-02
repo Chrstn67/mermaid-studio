@@ -155,7 +155,7 @@ const MermaidItem = () => {
         `}</style>
         <div className="error-message">
           <h2>Diagramme non trouvé</h2>
-          <Link to="/mermaid/list">← Retour à la galerie</Link>
+          <Link to="/mermaid-studio/list">← Retour à la galerie</Link>
         </div>
       </div>
     );
@@ -164,7 +164,7 @@ const MermaidItem = () => {
   return (
     <div className={`mermaid-item-page ${isFullscreen ? "fullscreen" : ""}`}>
       <div className="page-header">
-        <Link to="/mermaid/list" className="btn-back">
+        <Link to="/mermaid-studio/list" className="btn-back">
           ← Retour à la galerie
         </Link>
         <div className="item-meta">

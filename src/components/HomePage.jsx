@@ -15,10 +15,10 @@ const HomePage = () => {
             WYSIWYG moderne et intuitif
           </p>
           <div className="cta-buttons">
-            <Link to="/mermaid/editor" className="btn btn-primary">
+            <Link to="/mermaid-studio/editor" className="btn btn-primary">
               <span>🚀</span> Commencer à créer
             </Link>
-            <Link to="/mermaid/tutorial" className="btn btn-secondary">
+            <Link to="/mermaid-studio/tutorial" className="btn btn-secondary">
               <span>📚</span> Apprendre
             </Link>
           </div>

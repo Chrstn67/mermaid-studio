@@ -143,9 +143,9 @@ Les contributions sont les bienvenues ! N'hésite pas à :
 
 ## Ressources externes
 
-- [Documentation officielle Mermaid](https://mermaid.js.org)
-- [Exemples de diagrammes](https://mermaid.js.org/ecosystem/integrations-community.html)
-- [Syntaxe Mermaid](https://mermaid.js.org/intro/syntax-reference.html)
+- [Documentation officielle Mermaid](https://mermaid-studio.js.org)
+- [Exemples de diagrammes](https://mermaid-studio.js.org/ecosystem/integrations-community.html)
+- [Syntaxe Mermaid](https://mermaid-studio.js.org/intro/syntax-reference.html)
 
 ## Licence
 

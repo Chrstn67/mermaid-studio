@@ -16,11 +16,11 @@ function App() {
         <Header />
         <main className="main-content">
           <Routes>
-            <Route path="/mermaid" element={<HomePage />} />
-            <Route path="/mermaid/list" element={<List />} />
-            <Route path="/mermaid/list/:id" element={<MermaidItem />} />
-            <Route path="/mermaid/editor" element={<Editor />} />
-            <Route path="/mermaid/tutorial" element={<Tutorial />} />
+            <Route path="/mermaid-studio" element={<HomePage />} />
+            <Route path="/mermaid-studio/list" element={<List />} />
+            <Route path="/mermaid-studio/list/:id" element={<MermaidItem />} />
+            <Route path="/mermaid-studio/editor" element={<Editor />} />
+            <Route path="/mermaid-studio/tutorial" element={<Tutorial />} />
           </Routes>
         </main>
         <Footer />
