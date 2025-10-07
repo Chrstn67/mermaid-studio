@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-
 import { Link, useParams } from "react-router-dom";
 import mermaid from "mermaid";
 import { mermaidData } from "../data/data";
@@ -19,9 +18,18 @@ const MermaidItem = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [touchStart, setTouchStart] = useState(null);
+  const [lastTouchDistance, setLastTouchDistance] = useState(null);
   const [copied, setCopied] = useState(false);
 
   const item = mermaidData.find((m) => m.id === Number.parseInt(id));
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [id]);
 
   useEffect(() => {
     mermaid.initialize({
@@ -59,13 +67,15 @@ const MermaidItem = () => {
     }
   }, [item]);
 
+  // Gestion du zoom
   const zoomIn = () => setScale((prev) => Math.min(prev * 1.2, 3));
-  const zoomOut = () => setScale((prev) => Math.max(prev / 1.2, 0.5));
+  const zoomOut = () => setScale((prev) => Math.max(prev / 1.2, 0.3));
   const resetZoom = () => {
     setScale(1);
     setPosition({ x: 0, y: 0 });
   };
 
+  // Gestion du déplacement à la souris
   const handleMouseDown = (e) => {
     if (e.button !== 0) return;
     setIsDragging(true);
@@ -86,13 +96,58 @@ const MermaidItem = () => {
     if (containerRef.current) containerRef.current.style.cursor = "grab";
   }, []);
 
+  // Gestion du zoom avec la molette
   const handleWheel = useCallback((e) => {
     e.preventDefault();
-    if (e.ctrlKey) {
-      const delta = e.deltaY > 0 ? 0.9 : 1.1;
-      setScale((prev) => Math.max(0.3, Math.min(prev * delta, 3)));
-    }
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    setScale((prev) => Math.max(0.3, Math.min(prev * delta, 3)));
   }, []);
+
+  // Gestion tactile (mobile)
+  const getTouchDistance = (touches) => {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      // Déplacement avec un doigt
+      setIsDragging(true);
+      setTouchStart({
+        x: e.touches[0].clientX - position.x,
+        y: e.touches[0].clientY - position.y,
+      });
+    } else if (e.touches.length === 2) {
+      // Zoom avec deux doigts
+      e.preventDefault();
+      setLastTouchDistance(getTouchDistance(e.touches));
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches.length === 1 && isDragging) {
+      // Déplacement
+      setPosition({
+        x: e.touches[0].clientX - touchStart.x,
+        y: e.touches[0].clientY - touchStart.y,
+      });
+    } else if (e.touches.length === 2) {
+      // Zoom pinch
+      e.preventDefault();
+      const currentDistance = getTouchDistance(e.touches);
+      if (lastTouchDistance) {
+        const delta = currentDistance / lastTouchDistance;
+        setScale((prev) => Math.max(0.5, Math.min(prev * delta, 5)));
+      }
+      setLastTouchDistance(currentDistance);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setLastTouchDistance(null);
+  };
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -115,6 +170,7 @@ const MermaidItem = () => {
     }
   };
 
+  // Événements globaux
   useEffect(() => {
     const handleGlobalMouseUp = () => {
       if (isDragging) {
@@ -125,8 +181,10 @@ const MermaidItem = () => {
     const handleGlobalMouseMove = (e) => {
       if (isDragging) handleMouseMove(e);
     };
+
     document.addEventListener("mouseup", handleGlobalMouseUp);
     document.addEventListener("mousemove", handleGlobalMouseMove);
+
     return () => {
       document.removeEventListener("mouseup", handleGlobalMouseUp);
       document.removeEventListener("mousemove", handleGlobalMouseMove);
@@ -136,23 +194,6 @@ const MermaidItem = () => {
   if (!item) {
     return (
       <div className="mermaid-item-page">
-        <style>{`
-          .mermaid-item-page {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-            
-            .error-message {
-              text-align: center;
-              padding: 4rem 2rem;
-              
-              h2 {
-                color: #ef4444;
-                margin-bottom: 2rem;
-              }
-            }
-          }
-        `}</style>
         <div className="error-message">
           <h2>Diagramme non trouvé</h2>
           <Link to="/mermaid-studio/list">← Retour à la galerie</Link>
@@ -231,6 +272,9 @@ const MermaidItem = () => {
             ref={containerRef}
             onMouseDown={handleMouseDown}
             onWheel={handleWheel}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             <div className="zoom-controls">
               <button
@@ -254,11 +298,18 @@ const MermaidItem = () => {
 
             <div className="zoom-level">{Math.round(scale * 100)}%</div>
 
+            <div className="mobile-hint">
+              📱 Utilisez 2 doigts pour zoomer, 1 doigt pour déplacer
+            </div>
+
             <div
               ref={mermaidRef}
               className="mermaid-diagram"
               style={{
-                transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+                transform: `scale(${scale}) translate(${
+                  position.x / scale
+                }px, ${position.y / scale}px)`,
+                transformOrigin: "center center",
               }}
             ></div>
           </div>
@@ -275,8 +326,10 @@ const MermaidItem = () => {
         <div className="info-card">
           <h4>🎯 Contrôles</h4>
           <p>
-            <strong>Zoom :</strong> Molette souris (Ctrl) ou boutons ±<br />
+            <strong>Zoom :</strong> Molette souris ou boutons ±<br />
             <strong>Déplacement :</strong> Clic et glisser
+            <br />
+            <strong>Mobile :</strong> Pincez pour zoomer, glissez pour déplacer
             <br />
             <strong>Réinitialiser :</strong> Bouton ⎌
           </p>

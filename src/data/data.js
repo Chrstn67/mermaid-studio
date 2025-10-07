@@ -357,61 +357,83 @@ export const mermaidData = [
   },
   {
     id: 10,
-    title: "Exigences Système - Plateforme SaaS",
+    title: "Exigences système - Plateforme SaaS",
     type: "requirementDiagram",
     tags: ["exigences", "spécifications", "système", "saas"],
     code: `requirementDiagram
-    
-    requirement SaaS_Platform {
+
+    requirement SystèmeWeb {
         id: 1
-        text: "La plateforme doit supporter 10k utilisateurs concurrents."
-        risk: High
-        verifMethod: Test
+        text: "Le système doit fournir une application web fonctionnelle."
+        risk: Medium
+        verifymethod: Test
     }
-    
-    requirement Authentication {
+
+    requirement Frontend {
         id: 2
-        text: "Le système doit implémenter l'authentification OAuth2."
-        risk: Medium
-        verifMethod: Inspection
-    }
-    
-    requirement Data_Backup {
-        id: 3
-        text: "Sauvegarde automatique des données toutes les 24h."
-        risk: High
-        verifMethod: Test
-    }
-    
-    requirement API_Response {
-        id: 4
-        text: "Temps de réponse API < 200ms pour 95% des requêtes."
-        risk: Medium
-        verifMethod: Test
-    }
-    
-    requirement Mobile_Support {
-        id: 5
-        text: "Interface responsive support mobile et desktop."
+        text: "L'interface utilisateur doit être responsive et accessible."
         risk: Low
-        verifMethod: Demonstration
+        verifymethod: Inspection
     }
-    
-    SaaS_Platform - contains -> Authentication
-    SaaS_Platform - contains -> Data_Backup
-    SaaS_Platform - contains -> API_Response
-    SaaS_Platform - contains -> Mobile_Support
-    
-    element Customer_Portal {
-        type: container
+
+    requirement Backend {
+        id: 3
+        text: "L'API doit gérer les requêtes HTTP et les opérations CRUD."
+        risk: High
+        verifymethod: Test
     }
-    
-    element Security_Module {
-        type: container
+
+    requirement Securite {
+        id: 4
+        text: "Le système doit implémenter l'authentification et la protection CSRF."
+        risk: High
+        verifymethod: Test
     }
+
+    requirement Performance {
+        id: 5
+        text: "Les pages doivent charger en moins de 3 secondes."
+        risk: Medium
+        verifymethod: Test
+    }
+
+    requirement Compatibilite {
+        id: 6
+        text: "L'application doit être compatible avec les navigateurs modernes."
+        risk: Low
+        verifymethod: Test
+    }
+
+    element ApplicationECommerce {
+        type: "Application"
+    }
+
+    element React {
+        type: "Framework"
+    }
+
+    element NodeJS {
+        type: "Runtime"
+    }
+
+    element BaseDeDonnees {
+        type: "Database"
+    }
+
+    element HTTPS {
+        type: "Protocol"
+    }
+
+    SystèmeWeb - contains -> Frontend
+    SystèmeWeb - contains -> Backend
+    SystèmeWeb - contains -> Securite
+    SystèmeWeb - contains -> Performance
+    SystèmeWeb - contains -> Compatibilite
     
-    Customer_Portal - satisfies -> Authentication
-    Security_Module - satisfies -> Authentication`,
+    Frontend - copies -> React
+    Backend - copies -> NodeJS
+    Backend - contains -> BaseDeDonnees
+    Securite - contains -> HTTPS`,
   },
   {
     id: 11,
@@ -549,49 +571,24 @@ export const mermaidData = [
     type: "block",
     tags: ["architecture", "blocs", "monitoring", "système"],
     code: `block-beta
-    columns 1
-    
-    block:group("Système de Monitoring")
-      block:group("Couche Présentation")
-        block:dashboard["Dashboard Grafana":4]
-        block:alerts["Interface Alertes":2]
-      end
-      
-      block:group("Couche Application")
-        block:api["API Gateway":2]
-        block:processing["Traitement Données":3]
-        block:rules["Moteur Règles":2]
-      end
-      
-      block:group("Couche Données")
-        block:tsdb["Base TSDB":3]
-          space
-          block:prometheus["Prometheus"]
-          block:influxdb["InfluxDB"]
-        end
-        block:cache["Cache Redis":2]
-        block:object["Stockage Objet":2]
-          space
-          block:s3["S3"]
-        end
-      end
-      
-      block:group("Couche Collecte")
-        block:exporters["Exporteurs Métriques":3]
-        block:agents["Agents Collecte":2]
-        block:logs["Collecte Logs":2]
-      end
-    
-    dashboard --> api
-    alerts --> api
-    api --> processing
-    processing --> tsdb
-    processing --> cache
-    rules --> processing
-    tsdb --> object
-    exporters --> processing
-    agents --> processing
-    logs --> processing`,
+columns 1
+
+  db(("Base de Données"))
+  blockArrowId6<["&nbsp;&nbsp;&nbsp;"]>(down)
+  
+  block:ArchitectureWeb
+    Client["Client Navigateur"]
+    Serveur["Serveur Web & API"]
+    Frontend["Application Frontend"]
+  end
+  
+  space
+  
+  Deployment["Déploiement & Hébergement"]
+  
+  ArchitectureWeb --> Deployment
+  Frontend --> Deployment
+  style Serveur fill:#969,stroke:#333,stroke-width:4px`,
   },
   {
     id: 15,

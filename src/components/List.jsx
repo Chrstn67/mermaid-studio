@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { mermaidData, diagramTypes } from "../data/data";
 
@@ -9,6 +9,13 @@ import "../styles/List.css";
 const List = () => {
   const [selectedType, setSelectedType] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   const filteredData = useMemo(() => {
     return mermaidData.filter((item) => {

@@ -16,6 +16,7 @@
     .footer-links {
       display: flex;
       gap: 2rem;
+      align-items: center;
 
       @media (max-width: 768px) {
         flex-direction: column;
@@ -25,6 +26,21 @@
 
       a {
         color: #06b6d4;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #2563eb;
+        }
+      }
+
+      .legal-link,
+      .scroll-top-btn {
+        background: none;
+        border: none;
+        color: #06b6d4;
+        cursor: pointer;
+        font-size: inherit;
         text-decoration: none;
         transition: color 0.3s ease;
 
@@ -43,9 +59,110 @@
         animation: heartbeat 1.5s ease-in-out infinite;
       }
     }
+
     .logo-image {
       width: 5em;
       height: 5em;
+    }
+  }
+}
+
+/* Styles pour la modale */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+
+  h2 {
+    margin: 0;
+    color: #1f2937;
+  }
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
+  &:hover {
+    background: #f3f4f6;
+    color: #374151;
+  }
+}
+
+.modal-body {
+  padding: 2rem;
+  color: #374151;
+
+  h3 {
+    color: #111827;
+    margin: 1.5rem 0 0.5rem 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  p {
+    line-height: 1.6;
+    margin: 0.5rem 0;
+  }
+}
+
+.modal-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+
+  .btn-primary {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: #1d4ed8;
     }
   }
 }
@@ -57,5 +174,17 @@
   }
   50% {
     transform: scale(1.1);
+  }
+}
+
+/* Scroll to top smooth pour toute l'application */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Pour les navigateurs qui ne supportent pas scroll-behavior */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

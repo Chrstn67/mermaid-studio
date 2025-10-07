@@ -1,10 +1,18 @@
 "use client";
 
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 import "../styles/HomePage.css";
 
 const HomePage = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <div className="homepage">
       <div className="hero-section">
@@ -79,7 +87,7 @@ const HomePage = () => {
       <div className="stats-section">
         <div className="stats-container">
           <div className="stat">
-            <div className="stat-number">6+</div>
+            <div className="stat-number">15+</div>
             <div className="stat-label">Types de diagrammes</div>
           </div>
           <div className="stat">

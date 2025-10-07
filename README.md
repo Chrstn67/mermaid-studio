@@ -12,7 +12,7 @@ Mermaid Studio est une application web qui te permet de créer facilement des di
 
 - Édition en temps réel avec prévisualisation instantanée
 - Détection automatique des erreurs de syntaxe
-- Support de 6+ types de diagrammes différents
+- Support de 15+ types de diagrammes différents
 - Modèles prêts à l'emploi pour démarrer rapidement
 
 ### Galerie interactive
