@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import HomePage from "./HomePage";
 import List from "./List";
 import MermaidItem from "./MermaidItem";
-import Editor from "./Editor";
+import MermaidEditor from "./MermaidEditor";
 import Tutorial from "./Tutorial";
 
 import ScrollToTopButton from "./ScrollButtonToTop";
@@ -37,7 +37,7 @@ function App() {
             <Route path="/mermaid-studio" element={<HomePage />} />
             <Route path="/mermaid-studio/list" element={<List />} />
             <Route path="/mermaid-studio/list/:id" element={<MermaidItem />} />
-            <Route path="/mermaid-studio/editor" element={<Editor />} />
+            <Route path="/mermaid-studio/editor" element={<MermaidEditor />} />
             <Route path="/mermaid-studio/tutorial" element={<Tutorial />} />
           </Routes>
           <ScrollToTopButton />

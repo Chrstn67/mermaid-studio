@@ -23,7 +23,13 @@ const Footer = () => {
             </button>
           </div>
           <p>&copy; {new Date().getFullYear()} Mermaid Studio </p>
-          <img src="Logo.jpg" alt="Logo Developpeur" className="logo-image" />
+          <a
+            href="https://www.linkedin.com/in/christian-humbert-developpeur-web/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="Logo.jpg" alt="Logo Développeur" className="logo-image" />
+          </a>
         </div>
       </footer>
 

@@ -1840,230 +1840,227 @@ gitGraph
       AGI (Artificial General Intelligence) ? : 2025-2030`,
   },
 
-  block: {
-    title: "Créer un diagramme en blocs (Block Diagram)",
+  // --- SUBGRAPH (corrigé) ---
+  subgraph: {
+    title: "Créer des sous-graphes organisés",
     description:
-      "Les diagrammes en blocs représentent des architectures système, des flux de données, ou des infrastructures techniques. Ils montrent comment différents composants interagissent entre eux. Tu peux organiser les blocs en colonnes et groupes pour créer des architectures complexes et lisibles. Voici une explication détaillée de chaque élément de syntaxe :",
+      "Les sous-graphes te permettent de regrouper visuellement des nœuds liés dans des conteneurs. C'est idéal pour représenter des sous-systèmes, des modules, ou des composants fonctionnels dans tes diagrammes de flux. Chaque sous-graphe peut avoir son propre titre et être stylisé indépendamment pour une meilleure organisation visuelle.",
 
     syntax: [
       {
-        label: "Déclaration",
-        description: "Déclare le début d'un diagramme en blocs.",
-        code: "block-beta",
-      },
-      {
-        label: "Colonnes",
+        label: "Sous-graphe simple",
         description:
-          "Déclare le nombre de colonnes pour organiser les blocs horizontalement.",
-        code: "columns 3 (nombre de colonnes)",
+          "Crée un sous-graphe avec un titre. Tous les nœuds définis entre 'subgraph' et 'end' seront contenus dans le même conteneur visuel.",
+        code: "subgraph Titre\n  A --> B\n  B --> C\nend",
       },
       {
-        label: "Bloc simple",
-        description: "Ajoute un bloc avec un label rectangulaire.",
-        code: 'id["Label du bloc"]',
-      },
-      {
-        label: "Bloc base de données",
-        description: "Ajoute un bloc représentant une base de données.",
-        code: 'db[("Base de données")]',
-      },
-      {
-        label: "Bloc arrondi",
-        description: "Ajoute un bloc avec des coins arrondis.",
-        code: 'id(["Label arrondi"])',
-      },
-      {
-        label: "Bloc hexagonal",
-        description: "Ajoute un bloc en forme d'hexagone.",
-        code: 'id{{"Label hexagone"}}',
-      },
-      {
-        label: "Bloc trapèze",
-        description: "Ajoute un bloc en forme de trapèze.",
-        code: 'id[/"Label trapèze"/]',
-      },
-      {
-        label: "Espace vide",
+        label: "Sous-graphes multiples",
         description:
-          "Ajoute un espace vide pour organiser les blocs verticalement ou horizontalement.",
-        code: "space (ou space:2 pour 2 colonnes)",
+          "Crée plusieurs sous-graphes pour organiser ton diagramme en sections logiques distinctes.",
+        code: "subgraph ModuleA\n  A1 --> A2\nend\nsubgraph ModuleB\n  B1 --> B2\nend",
       },
       {
-        label: "Groupe de blocs",
-        description: "Regroupe plusieurs blocs dans un conteneur logique.",
-        code: "block:nom\n  columns 2\n  bloc1\n  bloc2\nend",
-      },
-      {
-        label: "Flèche simple",
+        label: "Connexions entre sous-graphes",
         description:
-          "Ajoute une flèche simple entre deux blocs pour indiquer une relation.",
-        code: "bloc1 --> bloc2",
+          "Relie des nœuds de différents sous-graphes pour montrer les interactions entre modules.",
+        code: "subgraph Frontend\n  UI --> API\nend\nsubgraph Backend\n  API --> DB\nend\nUI --> API",
       },
       {
-        label: "Flèche avec label",
+        label: "Sous-graphes imbriqués",
         description:
-          "Ajoute une flèche avec un label pour décrire la relation.",
-        code: "bloc1 -- label --> bloc2",
+          "Crée des sous-graphes à l'intérieur d'autres sous-graphes pour une organisation hiérarchique.",
+        code: "subgraph SystemePrincipal\n  subgraph Module1\n    A --> B\n  end\n  subgraph Module2\n    C --> D\n  end\nend",
       },
       {
-        label: "Flèche pointillée",
+        label: "Style des sous-graphes",
         description:
-          "Ajoute une flèche pointillée pour indiquer une relation optionnelle ou indirecte.",
-        code: "bloc1 -.-> bloc2",
+          "Applique des styles spécifiques aux sous-graphes pour les distinguer visuellement.",
+        code: "style Frontend fill:#e1f5fe\nstyle Backend fill:#f3e5f5\nstyle Database fill:#e8f5e8",
       },
       {
-        label: "Flèche épaisse",
+        label: "ID de sous-graphe",
         description:
-          "Ajoute une flèche épaisse pour indiquer une relation forte ou critique.",
-        code: "bloc1 ==> bloc2",
+          "Utilise un ID pour référencer le sous-graphe dans les styles et autres configurations.",
+        code: "subgraph id[Titre affiché]",
       },
       {
-        label: "Flèche bidirectionnelle",
+        label: "Alignement des sous-graphes",
         description:
-          "Ajoute une flèche bidirectionnelle pour indiquer une relation mutuelle.",
-        code: "bloc1 <--> bloc2",
+          "Contrôle la disposition des sous-graphes avec des options d'alignement.",
+        code: "subgraph Top\n  direction TB\n  A --> B\nend",
       },
     ],
 
-    example: `block-beta
-    columns 1
+    example: `graph TB
+  %% On donne un ID aux sous-graphes (pas d'espaces dans l'ID) et un label affiché entre crochets
+  subgraph front_end["Frontend Application"]
+    Login[Page de connexion] --> Dashboard[Tableau de bord]
+    Dashboard --> Settings[Paramètres]
+    Settings --> Profile[Profil utilisateur]
+  end
 
-    block:users
-      columns 3
-      u1["Utilisateur Web"]
-      u2["Utilisateur Mobile"]
-      u3["Utilisateur Admin"]
-    end
+  subgraph backend_api["Backend API"]
+    Auth[Service Authentification] --> User[Service Utilisateurs]
+    Auth --> Products[Service Produits]
+    User --> Database[(Base de données)]
+    Products --> Database
+    User --> Cache[(Cache Redis)]
+  end
 
-    space
+  subgraph external_services["External Services"]
+    Payment[API Paiement Stripe]
+    Email[Service Email SendGrid]
+    Analytics[Google Analytics]
+    CDN[Réseau de diffusion]
+  end
 
-    block:loadbalancer
-      columns 1
-      lb[["Load Balancer
-      (NGINX)"]]
-    end
+  subgraph monitoring_logs["Monitoring & Logs"]
+    Monitor[Système Monitoring]
+    Logger[Agrégation Logs]
+    Alert[Système d'alerte]
+    Monitor --> Logger
+    Logger --> Alert
+  end
 
-    space
+  %% Connexions principales (utiliser des nœuds existants, pas les titres de sous-graphes)
+  Login --> Auth
+  Dashboard --> User
+  Dashboard --> Products
+  Settings --> User
+  Profile --> User
 
-    block:frontend
-      columns 3
-      fe1(["Frontend Server 1
-      React/Next.js"])
-      fe2(["Frontend Server 2
-      React/Next.js"])
-      fe3(["Frontend Server 3
-      React/Next.js"])
-    end
+  %% Connexions services externes
+  Products --> Payment
+  User --> Email
+  Dashboard --> Analytics
+  Dashboard --> CDN
 
-    space
+  %% Connexions monitoring (brancher des nœuds réels vers le monitoring)
+  Auth --> Monitor
+  Analytics --> Monitor
 
-    block:gateway
-      columns 1
-      gw{{"API Gateway
-      Kong/AWS"}}
-    end
+  %% Styles pour une meilleure visibilité (on cible les IDs des sous-graphes)
+  style front_end fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#01579b
+  style backend_api fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#4a148c
+  style external_services fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px,color:#1b5e20
+  style monitoring_logs fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#e65100
 
-    space
+  %% Styles des nœuds
+  style Login fill:#bbdefb
+  style Dashboard fill:#90caf9
+  style Auth fill:#ce93d8
+  style Payment fill:#a5d6a7
+  style Monitor fill:#ffcc80`,
+  },
 
-    block:microservices
-      columns 4
-      ms1["Auth Service
-      Node.js"]
-      ms2["Product Service
-      Node.js"]
-      ms3["Order Service
-      Node.js"]
-      ms4["Payment Service
-      Node.js"]
-    end
+  styled: {
+    title: "Personnaliser les styles et apparences",
+    description:
+      "Mermaid te permet de personnaliser complètement l'apparence de tes diagrammes. Tu peux modifier les couleurs, bordures, polices et appliquer des classes CSS pour rendre ton diagramme unique.",
 
-    space
+    syntax: [
+      {
+        label: "Style individuel",
+        description: "Applique un style directement à un nœud.",
+        code: "style A fill:#f9f,stroke:#333,stroke-width:4px,color:#fff",
+      },
+      {
+        label: "Définition de classe",
+        description: "Définis une classe réutilisable pour plusieurs nœuds.",
+        code: "classDef important fill:#ffcccc,stroke:#ff0000,stroke-width:2px,color:#800000",
+      },
+      {
+        label: "Application de classe",
+        description: "Applique une classe prédéfinie à un nœud.",
+        code: "class A important",
+      },
+      {
+        label: "Style des liens",
+        description: "Personnalise l'apparence des connexions entre nœuds.",
+        code: "linkStyle 0 stroke:#ff3,stroke-width:2px",
+      },
+    ],
 
-    block:messaging
-      columns 2
-      redis[("Redis Cache")]
-      rabbit{{"RabbitMQ
-      Message Queue"}}
-    end
+    example: `graph TB
+  Start((Début)) --> Input[Saisie]
+  Input --> Validate{Valide ?}
+  Validate -->|Oui| Process[Traitement]
+  Validate -->|Non| Error[Erreur]
+  Process --> End((Fin))
+  Error --> Input
 
-    space
+  %% Styles
+  style Start fill:#98FB98,stroke:#228B22,stroke-width:2px
+  style End fill:#FFDAB9,stroke:#CD853F,stroke-width:2px
+  classDef important fill:#ffcccc,stroke:#ff0000,stroke-width:2px,color:#800000
+  class Error important
+  linkStyle 0 stroke:#228B22,stroke-width:2px
+  linkStyle 1 stroke:#ff0000,stroke-width:2px,stroke-dasharray:3 3`,
+  },
 
-    block:databases
-      columns 3
-      db1[("PostgreSQL
-      Users")]
-      db2[("MongoDB
-      Products")]
-      db3[("PostgreSQL
-      Orders")]
-    end
-
-    space
-
-    block:storage
-      columns 2
-      s3[/"S3 Storage
-      Images"/]
-      backup[/"Backup
-      Storage"/]
-    end
-
-    space
-
-    block:external
-      columns 3
-      stripe["Stripe API"]
-      sendgrid["SendGrid Email"]
-      analytics["Google Analytics"]
-    end
-
-    %% Connexions utilisateurs -> load balancer
-    u1 --> lb
-    u2 --> lb
-    u3 --> lb
-
-    %% Load balancer -> frontends
-    lb --> fe1
-    lb --> fe2
-    lb --> fe3
-
-    %% Frontends -> API Gateway
-    fe1 --> gw
-    fe2 --> gw
-    fe3 --> gw
-
-    %% API Gateway -> Microservices
-    gw --> ms1
-    gw --> ms2
-    gw --> ms3
-    gw --> ms4
-
-    %% Microservices -> Cache/Queue
-    ms1 -.-> redis
-    ms2 -.-> redis
-    ms3 -.-> rabbit
-    ms4 -.-> rabbit
-
-    %% Microservices -> Databases
-    ms1 --> db1
-    ms2 --> db2
-    ms3 --> db3
-    ms4 --> db3
-
-    %% Storage connections
-    ms2 -- "Upload images" --> s3
-    db1 -.-> backup
-    db2 -.-> backup
-    db3 -.-> backup
-
-    %% External services
-    ms4 -- "Process payment" --> stripe
-    ms1 -- "Send emails" --> sendgrid
-    fe1 -.-> analytics
-
-    style lb fill:#f9f,stroke:#333,stroke-width:4px
-    style gw fill:#bbf,stroke:#333,stroke-width:4px
-    style redis fill:#ff9,stroke:#333
-    style rabbit fill:#9f9,stroke:#333`,
+  interactive: {
+    title: "Créer des diagrammes interactifs avec liens cliquables",
+    description:
+      "Ajoutez des liens cliquables et des infobulles pour rendre vos diagrammes interactifs. Idéal pour la documentation, les présentations dynamiques ou les prototypes d'application.",
+    syntax: [
+      {
+        label: "Lien simple",
+        description: "Ajoute un lien cliquable à un nœud, sans infobulle.",
+        code: 'click A "https://example.com"',
+      },
+      {
+        label: "Lien avec infobulle",
+        description:
+          "Ajoute un lien cliquable avec une infobulle qui s'affiche au survol.",
+        code: 'click A "https://example.com" "Aller sur la page d\'accueil"',
+      },
+      {
+        label: "Callback JavaScript",
+        description:
+          "Exécute une fonction JavaScript lors du clic sur un nœud. Nécessite `securityLevel: 'loose'` dans la configuration de Mermaid.",
+        code: 'click A call handleNodeClick("A") "Noeud A sélectionné"',
+      },
+      {
+        label: "Style personnalisé pour les nœuds cliquables",
+        description:
+          "Applique un style visuel distinct aux nœuds interactifs pour les rendre identifiables.",
+        code: "classDef clickable fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#0d47a1,cursor:pointer;",
+      },
+      {
+        label: "Application du style à un nœud",
+        description: "Associe le style `clickable` à un ou plusieurs nœuds.",
+        code: "class Home,Contact clickable;",
+      },
+    ],
+    example: `graph TB
+    %% Définition des nœuds et de leur hiérarchie
+    Home[Accueil] --> Products[Produits]
+    Home --> Services[Services]
+    Home --> Contact[Contact]
+    Products --> Product1[Produit 1]
+    Products --> Product2[Produit 2]
+    Services --> Premium[Service Premium]
+    Services --> Standard[Service Standard]
+    
+    %% Liens cliquables avec infobulles
+    click Home "https://example.com" "Retour à l'accueil"
+    click Products "https://example.com/products" "Voir nos produits"
+    click Product1 "https://example.com/product1" "Détails du Produit 1"
+    click Product2 "https://example.com/product2" "Détails du Produit 2"
+    click Services "https://example.com/services" "Nos services"
+    click Premium "https://example.com/premium" "Offre Premium"
+    click Standard "https://example.com/standard" "Offre Standard"
+    click Contact "https://example.com/contact" "Nous contacter"
+    
+    %% Styles pour les nœuds cliquables
+    classDef home fill:#4CAF50,stroke:#2E7D32,color:white,stroke-width:2px,cursor:pointer;
+    classDef product fill:#2196F3,stroke:#0D47A1,color:white,stroke-width:2px,cursor:pointer;
+    classDef service fill:#FF9800,stroke:#E65100,color:white,stroke-width:2px,cursor:pointer;
+    
+    %% Application des styles
+    class Home home
+    class Products,Product1,Product2 product
+    class Services,Premium,Standard service
+    class Contact service`,
   },
 };

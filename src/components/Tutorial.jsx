@@ -176,6 +176,9 @@ const Tutorial = () => {
     { id: "mindmap", icon: "🧠", label: "Mind Map" },
     { id: "timeline", icon: "⏳", label: "Timeline" },
     { id: "block", icon: "🧱", label: "Blocs" },
+    { id: "subgraph", icon: "🔲", label: "Sous-graphes" },
+    { id: "styled", icon: "🎨", label: "Styles" },
+    { id: "interactive", icon: "🔗", label: "Interactif" },
   ];
 
   return (

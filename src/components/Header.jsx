@@ -29,17 +29,18 @@ const Header = () => {
           >
             Galerie
           </Link>
-          <Link
-            to="/mermaid-studio/editor"
-            className={isActive("/editor") ? "active" : ""}
-          >
-            Éditeur
-          </Link>
+
           <Link
             to="/mermaid-studio/tutorial"
             className={isActive("/tutorial") ? "active" : ""}
           >
             Tutoriels
+          </Link>
+          <Link
+            to="/mermaid-studio/editor"
+            className={isActive("/editor") ? "active" : ""}
+          >
+            Éditeur
           </Link>
         </nav>
       </div>
