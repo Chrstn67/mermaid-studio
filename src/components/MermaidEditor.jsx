@@ -67,10 +67,24 @@ const MermaidEditor = () => {
       theme: "default",
       securityLevel: "loose",
       fontFamily: "Arial",
-      flowchart: { useMaxWidth: false, htmlLabels: true },
-      sequence: { useMaxWidth: false },
-      gitGraph: { useMaxWidth: false },
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: "basis",
+      },
+      sequence: {
+        useMaxWidth: false,
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        actorMargin: 50,
+      },
+      gantt: {
+        useMaxWidth: false,
+        barHeight: 20,
+        barGap: 4,
+      },
       er: { useMaxWidth: false },
+      gitGraph: { useMaxWidth: false },
     });
   }, []);
 
