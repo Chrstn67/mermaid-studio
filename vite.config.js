@@ -5,4 +5,18 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/mermaid-studio/",
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          mermaid: ["mermaid"],
+          vendor: ["react", "react-dom", "react-router-dom"],
+        },
+      },
+    },
+  },
+  // Ajoute cette configuration pour résoudre les problèmes de chunks
+  optimizeDeps: {
+    include: ["mermaid"],
+  },
 });

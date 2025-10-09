@@ -37,10 +37,22 @@ const MermaidItem = () => {
       theme: "default",
       securityLevel: "loose",
       fontFamily: "Arial",
-      flowchart: { useMaxWidth: false, htmlLabels: true },
-      sequence: { useMaxWidth: false },
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: "basis",
+      },
+      sequence: {
+        useMaxWidth: false,
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        actorMargin: 50,
+      },
       gitGraph: { useMaxWidth: false },
       er: { useMaxWidth: false },
+      // Configuration importante pour la production
+      maxTextSize: 100000,
+      logLevel: "fatal",
     });
   }, []);
 

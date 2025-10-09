@@ -67,10 +67,22 @@ const MermaidEditor = () => {
       theme: "default",
       securityLevel: "loose",
       fontFamily: "Arial",
-      flowchart: { useMaxWidth: false, htmlLabels: true },
-      sequence: { useMaxWidth: false },
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: "basis",
+      },
+      sequence: {
+        useMaxWidth: false,
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        actorMargin: 50,
+      },
       gitGraph: { useMaxWidth: false },
       er: { useMaxWidth: false },
+      // Configuration importante pour la production
+      maxTextSize: 100000,
+      logLevel: "fatal",
     });
   }, []);
 
@@ -84,9 +96,8 @@ const MermaidEditor = () => {
       diagramElement.textContent = code;
       mermaidRef.current.appendChild(diagramElement);
 
-      await mermaid.run({
-        nodes: [diagramElement],
-      });
+      // Utilise mermaid.contentLoaded() au lieu de mermaid.run()
+      await mermaid.contentLoaded();
 
       setError("");
     } catch (err) {
@@ -94,12 +105,12 @@ const MermaidEditor = () => {
       setError("Erreur de syntaxe : " + err.message);
 
       mermaidRef.current.innerHTML = `
-        <div class="error-preview">
-          <strong>⚠️ Erreur de rendu</strong>
-          <p>${err.message}</p>
-          <p>Vérifiez la syntaxe de votre diagramme.</p>
-        </div>
-      `;
+      <div class="error-preview">
+        <strong>⚠️ Erreur de rendu</strong>
+        <p>${err.message}</p>
+        <p>Vérifiez la syntaxe de votre diagramme.</p>
+      </div>
+    `;
     }
   }, [code]);
 
