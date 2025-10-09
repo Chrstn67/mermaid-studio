@@ -37,22 +37,10 @@ const MermaidItem = () => {
       theme: "default",
       securityLevel: "loose",
       fontFamily: "Arial",
-      flowchart: {
-        useMaxWidth: false,
-        htmlLabels: true,
-        curve: "basis",
-      },
-      sequence: {
-        useMaxWidth: false,
-        diagramMarginX: 50,
-        diagramMarginY: 10,
-        actorMargin: 50,
-      },
+      flowchart: { useMaxWidth: false, htmlLabels: true },
+      sequence: { useMaxWidth: false },
       gitGraph: { useMaxWidth: false },
       er: { useMaxWidth: false },
-      // Configuration importante pour la production
-      maxTextSize: 100000,
-      logLevel: "fatal",
     });
   }, []);
 
@@ -217,7 +205,7 @@ const MermaidItem = () => {
   return (
     <div className={`mermaid-item-page ${isFullscreen ? "fullscreen" : ""}`}>
       <div className="page-header">
-        <Link to="/mermaid-studio/list" className="btn-back">
+        <Link to="/list" className="btn-back">
           ← Retour à la galerie
         </Link>
         <div className="item-meta">

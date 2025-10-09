@@ -101,7 +101,7 @@ const List = () => {
             </div>
 
             <div className="card-actions">
-              <Link to={`/mermaid-studio/list/${item.id}`} className="btn-view">
+              <Link to={`/list/${item.id}`} className="btn-view">
                 Voir le diagramme →
               </Link>
             </div>
