@@ -1,11 +1,23 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/mermaid-studio/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mermaid Studio</title>
-    <script type="module" crossorigin src="/mermaid-studio/assets/index-CWK2y93B.js"></script>
+    <script type="text/javascript">
+      // Gestion de la redirection depuis la page 404
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/mermaid-studio/assets/index-PcCDWaOR.js"></script>
+    <link rel="modulepreload" crossorigin href="/mermaid-studio/assets/mermaid-DDpxWTMT.js">
+    <link rel="modulepreload" crossorigin href="/mermaid-studio/assets/vendor-2x5aswoc.js">
     <link rel="stylesheet" crossorigin href="/mermaid-studio/assets/index-CQ1Ot-fS.css">
   </head>
   <body>
